@@ -1,0 +1,73 @@
+{
+    "meta": {
+        "label": "Events recipe",
+        "description": "Retrieve events from your Google Calendar base on parameters of an existing dataset",
+        "icon": "icon-calendar"
+    },
+    "kind": "PYTHON",
+    "inputRoles": [
+        {
+            "name": "input_A_role",
+            "label": "Dataset containing variables",
+            "description": "",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+
+    "outputRoles": [
+        {
+            "name": "api_output",
+            "label": "Events",
+            "description": "",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+    "params": [
+        {
+            "type": "SEPARATOR",
+            "label": "Authentication"
+        },
+        {
+            "name": "oauth_credentials",
+            "label": "Google Single Sign On",
+            "type": "PRESET",
+            "parameterSetId": "oauth-credentials"
+        },
+        {
+            "type": "SEPARATOR",
+            "label": "Parameters"
+        },
+        {
+            "name": "calendar_id_column",
+            "label": "Columns containing calendar IDs",
+            "description": "If empty, events will be collected from \"primary\" ",
+            "type": "COLUMN",
+            "columnRole": "input_A_role"
+        },
+        {
+            "name": "from_date_column",
+            "label": "Columns starting dates",
+            "description": "Optional. If empty, events will be collected from today ",
+            "type": "COLUMN",
+            "allowedColumnTypes": [
+                "date"
+            ],
+            "columnRole": "input_A_role"
+        },
+        {
+            "name": "to_date_column",
+            "label": "Columns end dates",
+            "description": "Optional",
+            "type": "COLUMN",
+            "allowedColumnTypes": [
+                "date"
+            ],
+            "columnRole": "input_A_role"
+        }
+    ],
+    "resourceKeys": []
+}

@@ -1,0 +1,49 @@
+{
+    "meta" : {
+        "label": "Events",
+        "description": "Retrieve events from your Google Calendar",
+        "icon": "icon-calendar"
+    },
+    "readable": true,
+    "writable": false,
+    "params": [
+        {
+            "name": "oauth_credentials",
+            "label": "Google Single Sign On",
+            "type": "PRESET",
+            "parameterSetId": "oauth-credentials"
+        },
+        {
+          "type": "STRING",
+          "name": "calendar_id",
+          "label": "Calendar ID",
+          "defaultValue": "primary"
+        },        
+        {
+          "type": "DATE",
+          "name": "from_date",
+          "label": "From"
+        },
+        {
+          "type": "DATE",
+          "name": "to_date",
+          "label": "To",
+          "description": "Optional"
+        },
+        {
+          "type": "INT",
+          "name": "max_results",
+          "label": "Max results",
+          "description": "(Optional)",
+          "defaultValue": -1,
+          "visibilityCondition": false
+        },
+        {
+          "type": "BOOLEAN",
+          "name": "raw_results",
+          "label": "Raw results",
+          "description": "Select to output raw JSON results",
+          "defaultValue": false
+        }
+    ]
+}

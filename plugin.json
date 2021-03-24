@@ -1,0 +1,13 @@
+{
+    "id": "google-calendar",
+    "version": "1.0.0",
+    "meta": {
+        "label": "Google Calendar",
+        "description": "Retrieve data from your Google Calendar account",
+        "author": "Dataiku (Alex Bourret)",
+        "icon": "icon-calendar",
+        "tags": ["Google"],
+        "url": "",
+        "licenseInfo": "Apache Software License"
+    }
+}
