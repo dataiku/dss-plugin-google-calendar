@@ -1,6 +1,12 @@
+import logging
 from dataiku.connector import Connector
 from google_calendar_client import GoogleCalendarClient
 from dku_common import get_token_from_config
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO,
+                    format='google-calendar plugin %(levelname)s - %(message)s')
 
 
 class GoogleCalendarEventConnector(Connector):
@@ -21,18 +27,21 @@ class GoogleCalendarEventConnector(Connector):
 
     def generate_rows(self, dataset_schema=None, dataset_partitioning=None,
                       partition_id=None, records_limit=-1):
-        events = self.client.get_events(
-            from_date=self.from_date,
-            to_date=self.to_date,
-            calendar_id=self.calendar_id,
-            records_limit=records_limit
-        )
-        if self.raw_results:
-            for event in events:
-                yield {"api_output": event}
-        else:
-            for event in events:
-                yield event
+        first_call = True
+        while first_call or self.client.has_more_events():
+            first_call = False
+            events = self.client.get_events(
+                from_date=self.from_date,
+                to_date=self.to_date,
+                calendar_id=self.calendar_id,
+                records_limit=records_limit
+            )
+            if self.raw_results:
+                for event in events:
+                    yield {"api_output": event}
+            else:
+                for event in events:
+                    yield event
 
     def get_writer(self, dataset_schema=None, dataset_partitioning=None,
                    partition_id=None):
