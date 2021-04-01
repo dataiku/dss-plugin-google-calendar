@@ -10,6 +10,10 @@
     ],
     "params": [
         {
+            "type": "SEPARATOR",
+            "label": "To be used, this preset will first have to be validated, in Profile > Credentials, once and by each user who needs the access"
+        },
+        {
             "name": "access_token",
             "type": "CREDENTIAL_REQUEST",
             "credentialRequestSettings": {

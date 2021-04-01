@@ -1,8 +1,8 @@
 import logging
-import datetime
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from dku_constants import DKUConstants as constants
 
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -30,9 +30,36 @@ class GoogleCalendarClient():
         self.service = build('calendar', 'v3', credentials=credentials)
         logger.info("Google Calendar service ok")
         self.next_page_token = None
-        self.records = 0
+        self.number_retrieved_events = 0
 
-    def get_events(self, from_date=None, to_date=None, calendar_id="primary", records_limit=-1, can_raise=True):
+    def get_events(self, from_date=None, to_date=None, calendar_id=constants.DEFAULT_CALENDAR_ID, records_limit=constants.RECORDS_NO_LIMIT, can_raise=True):
+
+        kwargs = self.get_event_kwargs(from_date, to_date, calendar_id, records_limit)
+
+        try:
+            events_result = self.service.events().list(
+                **kwargs
+            ).execute()
+        except Exception as err:
+            error_message = "{}".format(err)
+            logging.error("Google Calendar client error : {}".format(error_message))
+            if error_message.startswith("<HttpError 404"):
+                error_message = "The calendar with ID '{}' does not exists.".format(calendar_id)
+            self.next_page_token = None
+            if can_raise:
+                raise GoogleCalendarClientError("Error: {}".format(error_message))
+            else:
+                return [{"api_error": "{}".format(error_message)}]
+
+        events = events_result.get('items', [])
+        self.number_retrieved_events += len(events)
+        logger.info("{} events retrieved, {} in total".format(len(events), self.number_retrieved_events))
+
+        self.update_next_page_token(events_result, records_limit)
+
+        return events
+
+    def get_event_kwargs(self, from_date=None, to_date=None, calendar_id=constants.DEFAULT_CALENDAR_ID, records_limit=constants.RECORDS_NO_LIMIT):
         kwargs = {
             "calendarId": calendar_id,
             "singleEvents": True,
@@ -46,32 +73,16 @@ class GoogleCalendarClient():
             kwargs["maxResults"] = records_limit
         if self.next_page_token:
             kwargs["pageToken"] = self.next_page_token
-        try:
-            events_result = self.service.events().list(
-                **kwargs
-            ).execute()
-        except Exception as err:
-            logging.error("Google Calendar client error : {}".format(err))
-            self.next_page_token = None
-            if can_raise:
-                raise GoogleCalendarClientError("Error: {}".format(err))
-            else:
-                return [{"api_error": "{}".format(err)}]
-        events = events_result.get('items', [])
-        self.records += len(events)
-        logger.info("{} events retrieved, {} in total".format(len(events), self.records))
+        return kwargs
 
-        if records_limit > 0:  # I know. But headache.
-            if self.records < records_limit:
-                self.next_page_token = events_result.get("nextPageToken")
-            else:
-                self.next_page_token = None
-        else:
+    def update_next_page_token(self, events_result, records_limit=constants.RECORDS_NO_LIMIT):
+        if records_limit == constants.RECORDS_NO_LIMIT or self.number_retrieved_events < records_limit:
             self.next_page_token = events_result.get("nextPageToken")
+        else:
+            self.next_page_token = None
 
         if self.next_page_token:
             logging.info("More events available")
-        return events
 
     def has_more_events(self):
         return self.next_page_token is not None

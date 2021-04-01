@@ -22,7 +22,8 @@
         {
           "type": "DATE",
           "name": "from_date",
-          "label": "From"
+          "label": "From",
+          "description": "Optional"
         },
         {
           "type": "DATE",

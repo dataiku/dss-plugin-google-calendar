@@ -1,7 +1,9 @@
 import logging
+import datetime
 from dataiku.connector import Connector
 from google_calendar_client import GoogleCalendarClient
-from dku_common import get_token_from_config
+from dku_common import get_token_from_config, assert_no_temporal_paradox
+from dku_constants import DKUConstants as constants
 
 
 logger = logging.getLogger(__name__)
@@ -15,9 +17,10 @@ class GoogleCalendarEventConnector(Connector):
         Connector.__init__(self, config, plugin_config)
         access_token = get_token_from_config(config)
         self.client = GoogleCalendarClient(access_token)
-        self.from_date = self.config.get("from_date")
+        self.from_date = self.config.get("from_date", None)
         self.to_date = self.config.get("to_date", None)
-        self.calendar_id = self.config.get("calendar_id", "primary")
+        assert_no_temporal_paradox(self.from_date, self.to_date)
+        self.calendar_id = self.config.get("calendar_id", constants.DEFAULT_CALENDAR_ID)
         self.raw_results = self.config.get("raw_results", False)
 
     def get_read_schema(self):
@@ -26,7 +29,7 @@ class GoogleCalendarEventConnector(Connector):
         return None
 
     def generate_rows(self, dataset_schema=None, dataset_partitioning=None,
-                      partition_id=None, records_limit=-1):
+                      partition_id=None, records_limit=constants.RECORDS_NO_LIMIT):
         first_call = True
         while first_call or self.client.has_more_events():
             first_call = False
@@ -36,12 +39,8 @@ class GoogleCalendarEventConnector(Connector):
                 calendar_id=self.calendar_id,
                 records_limit=records_limit
             )
-            if self.raw_results:
-                for event in events:
-                    yield {"api_output": event}
-            else:
-                for event in events:
-                    yield event
+            for event in events:
+                yield {"api_output": event} if self.raw_results else event
 
     def get_writer(self, dataset_schema=None, dataset_partitioning=None,
                    partition_id=None):

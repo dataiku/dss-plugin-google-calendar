@@ -1,4 +1,6 @@
 import pandas
+import datetime
+from dku_constants import DKUConstants as constants
 
 
 def get_token_from_config(config):
@@ -17,3 +19,15 @@ def get_iso_format(panda_date):
     if pandas.isnull(panda_date):
         return None
     return panda_date.isoformat() + "Z"
+
+
+def get_datetime_from_iso_string(iso_string):
+    return datetime.datetime.strptime(iso_string, constants.ISO_DATE_FORMAT)
+
+
+def assert_no_temporal_paradox(from_date, to_date):
+    if from_date and to_date:
+        from_datetime = get_datetime_from_iso_string(from_date)
+        to_datetime = get_datetime_from_iso_string(to_date)
+        if from_datetime > to_datetime:
+            raise ValueError("The 'To' date currently set is before the 'From' date")

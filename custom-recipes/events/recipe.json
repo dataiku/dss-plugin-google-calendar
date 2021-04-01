@@ -1,7 +1,7 @@
 {
     "meta": {
-        "label": "Events recipe",
-        "description": "Retrieve events from your Google Calendar base on parameters of an existing dataset",
+        "label": "Calendar events",
+        "description": "Retrieve events from your Google Calendar based on parameters of an existing dataset",
         "icon": "icon-calendar"
     },
     "kind": "PYTHON",
@@ -39,19 +39,19 @@
         },
         {
             "type": "SEPARATOR",
-            "label": "Parameters"
+            "label": "Columns mappings"
         },
         {
             "name": "calendar_id_column",
-            "label": "Columns containing calendar IDs",
+            "label": "Column with Calendar IDs",
             "description": "If empty, events will be collected from \"primary\" ",
             "type": "COLUMN",
             "columnRole": "input_A_role"
         },
         {
             "name": "from_date_column",
-            "label": "Columns starting dates",
-            "description": "Optional. If empty, events will be collected from today ",
+            "label": "Column with start dates",
+            "description": "Optional",
             "type": "COLUMN",
             "allowedColumnTypes": [
                 "date"
@@ -60,7 +60,7 @@
         },
         {
             "name": "to_date_column",
-            "label": "Columns end dates",
+            "label": "Column with end dates",
             "description": "Optional",
             "type": "COLUMN",
             "allowedColumnTypes": [

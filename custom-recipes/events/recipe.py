@@ -6,6 +6,7 @@ import logging
 from dataiku.customrecipe import get_input_names_for_role, get_recipe_config, get_output_names_for_role
 from google_calendar_client import GoogleCalendarClient
 from dku_common import get_token_from_config, get_iso_format
+from dku_constants import DKUConstants as constants
 
 
 logger = logging.getLogger(__name__)
@@ -31,7 +32,7 @@ input_parameters_dataframe = input_parameters_dataset.get_dataframe()
 logger.info("{} line(s) to process".format(len(input_parameters_dataframe)))
 events = []
 for index, input_parameters_row in input_parameters_dataframe.iterrows():
-    calendar_id = input_parameters_row.get(calendar_id_column) if calendar_id_column else "primary"
+    calendar_id = input_parameters_row.get(calendar_id_column, constants.DEFAULT_CALENDAR_ID)
     from_date = get_iso_format(input_parameters_row.get(from_date_column)) if from_date_column else None
     to_date = get_iso_format(input_parameters_row.get(to_date_column)) if to_date_column else None
 
