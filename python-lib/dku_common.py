@@ -31,3 +31,15 @@ def assert_no_temporal_paradox(from_date, to_date):
         to_datetime = get_datetime_from_iso_string(to_date)
         if from_datetime > to_datetime:
             raise ValueError("The 'To' date currently set is before the 'From' date")
+
+def extract_start_end_date(event):
+    start = event.get("start", {})
+    event["start_dateTime"] = start.get("dateTime")
+    end = event.get("end", {})
+    event["end_dateTime"] = end.get("dateTime")
+    return event
+
+def extract_start_end_dates(events):
+    for event in events:
+        event = extract_start_end_date(event)
+    return events

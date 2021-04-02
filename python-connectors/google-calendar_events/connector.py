@@ -2,7 +2,7 @@ import logging
 import datetime
 from dataiku.connector import Connector
 from google_calendar_client import GoogleCalendarClient
-from dku_common import get_token_from_config, assert_no_temporal_paradox
+from dku_common import get_token_from_config, assert_no_temporal_paradox, extract_start_end_date
 from dku_constants import DKUConstants as constants
 
 
@@ -40,7 +40,7 @@ class GoogleCalendarEventConnector(Connector):
                 records_limit=records_limit
             )
             for event in events:
-                yield {"api_output": event} if self.raw_results else event
+                yield {"api_output": event} if self.raw_results else extract_start_end_date(event)
 
     def get_writer(self, dataset_schema=None, dataset_partitioning=None,
                    partition_id=None):

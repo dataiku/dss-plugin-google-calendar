@@ -5,7 +5,7 @@ import logging
 
 from dataiku.customrecipe import get_input_names_for_role, get_recipe_config, get_output_names_for_role
 from google_calendar_client import GoogleCalendarClient
-from dku_common import get_token_from_config, get_iso_format
+from dku_common import get_token_from_config, get_iso_format, extract_start_end_dates
 from dku_constants import DKUConstants as constants
 
 
@@ -40,7 +40,9 @@ for index, input_parameters_row in input_parameters_dataframe.iterrows():
     while first_call or client.has_more_events():
         first_call = False
         events.extend(
-            client.get_events(from_date=from_date, to_date=to_date, calendar_id=calendar_id, can_raise=False)
+            extract_start_end_dates(
+                client.get_events(from_date=from_date, to_date=to_date, calendar_id=calendar_id, can_raise=False)
+            )
         )
 
 odf = pandas.DataFrame(events)
