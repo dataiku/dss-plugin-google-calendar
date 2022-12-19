@@ -4,8 +4,8 @@
         "description": "",
         "icon": "icon-calendar"
     },
-    "defaultDefinableInline": true,
-    "defaultDefinableAtProjectLevel": true,
+    "defaultDefinableInline": false,
+    "defaultDefinableAtProjectLevel": false,
     "pluginParams": [
     ],
     "params": [
@@ -19,7 +19,7 @@
             "credentialRequestSettings": {
                 "type": "OAUTH2",
                 "oauth2Flow": "authorization_code",
-                "authorizationEndpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+                "authorizationEndpoint": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent",
                 "tokenEndpoint": "https://oauth2.googleapis.com/token",
                 "scope": "https://www.googleapis.com/auth/calendar.readonly"
             }
