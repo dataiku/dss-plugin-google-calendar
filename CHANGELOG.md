@@ -1,5 +1,9 @@
 # Changelog
 
+## [Version 1.0.2](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.0.2) - Fix release - 2026-04-12
+
+- Add agent tool for event creation
+
 ## [Version 1.0.1](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.0.1) - Fix release - 2022-12-20
 
 - Fix the authorization endpoint in order to work with webapps
