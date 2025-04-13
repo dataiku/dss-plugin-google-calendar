@@ -21,7 +21,7 @@
                 "oauth2Flow": "authorization_code",
                 "authorizationEndpoint": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent",
                 "tokenEndpoint": "https://oauth2.googleapis.com/token",
-                "scope": "https://www.googleapis.com/auth/calendar.readonly"
+                "scope": "https://www.googleapis.com/auth/calendar.events"
             }
         }
     ]

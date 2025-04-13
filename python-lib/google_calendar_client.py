@@ -35,7 +35,6 @@ class GoogleCalendarClient():
     def get_events(self, from_date=None, to_date=None, calendar_id=constants.DEFAULT_CALENDAR_ID, records_limit=constants.RECORDS_NO_LIMIT, can_raise=True):
 
         kwargs = self.get_event_kwargs(from_date, to_date, calendar_id, records_limit)
-
         try:
             events_result = self.service.events().list(
                 **kwargs
@@ -86,3 +85,19 @@ class GoogleCalendarClient():
 
     def has_more_events(self):
         return self.next_page_token is not None
+
+    def create_event(self, **kwargs):
+        calendar_id = kwargs.get("calendar_id", constants.DEFAULT_CALENDAR_ID)
+        event = {}
+        event["summary"] = kwargs.get("summary", "")
+        event["location"] = kwargs.get("location", "")
+        event["description"] = kwargs.get("description", "")
+        event["start"] = {
+            'dateTime': kwargs.get("start")
+        }
+        event["end"] = {
+            'dateTime': kwargs.get("end")
+        }
+
+        response = self.service.events().insert(calendarId=calendar_id, body=event).execute()
+        return response.get("htmlLink")
