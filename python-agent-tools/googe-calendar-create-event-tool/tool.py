@@ -2,7 +2,7 @@ import logging
 from dataiku.llm.agent_tools import BaseAgentTool
 from google_calendar_client import GoogleCalendarClient
 from dku_common import (
-    get_token_from_config, assert_no_temporal_paradox, extract_start_end_date
+    get_token_from_config, assert_no_temporal_paradox, extract_start_end_date, time_now_RFC3339
 )
 from dku_constants import DKUConstants as constants
 
@@ -21,6 +21,7 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
         self.calendar_id = config.get("calendar_id", constants.DEFAULT_CALENDAR_ID)
 
     def get_descriptor(self, tool):
+        time_now = "All time expression should be evaluated agains the current date and time, which is {}.".format(time_now_RFC3339())
         return {
             "description": "This tool is a wrapper around Google Calendar Events list API, useful when you need to create an event stored on a Google Calendar. The input to this tool is a dictionary containing the time period for the events, e.g. '{'timeMin':'2011-06-03T10:00:00Z', 'timeMax':'2011-06-03T10:30:00Z'}'",
             "inputSchema": {
@@ -42,11 +43,11 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
                     },
                     "start": {
                         "type": "date",
-                        "description": "Upper bound (exclusive) for the event's start time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z."
+                        "description": "Upper bound (exclusive) for the event's start time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. {}".format(time_now)
                     },
                     "end": {
                         "type": "date",
-                        "description": "Lower bound (exclusive) for the event's end time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z."
+                        "description": "Lower bound (exclusive) for the event's end time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. {}".format(time_now)
                     },
                     "attendees": {
                         "type": "string",
@@ -57,16 +58,22 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
         }
 
     def invoke(self, input, trace):
-        logger.error("Invoke google-calendar tool with {}".format(input))
+        logger.info("Invoke google-calendar tool with {}".format(input))
         args = input.get("input", {})
-        response = self.client.create_event(
-            calendar_id=self.calendar_id,
-            summary=args.get("summary"),
-            location=args.get("location"),
-            description=args.get("description"),
-            start=args.get("start"),
-            end=args.get("end")
-        )
+        try:
+            response = self.client.create_event(
+                calendar_id=self.calendar_id,
+                summary=args.get("summary"),
+                location=args.get("location"),
+                description=args.get("description"),
+                start=args.get("start"),
+                end=args.get("end")
+            )
+        except Exception as error:
+            logger.error("There was an error {}".format(error))
+            return {
+                "output": "There was an error and the Google Calendar event could not be created : {}".format(error)
+            }
 
         return {
             "output": "Event created with the following link : {}".format(response)
