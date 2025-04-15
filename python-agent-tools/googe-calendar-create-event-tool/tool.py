@@ -61,13 +61,19 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
         logger.info("Invoke google-calendar tool with {}".format(input))
         args = input.get("input", {})
         try:
+            attendees_emails = args.get("attendees","").split(",")
+            attendees = []
+            for email in attendees_emails:
+                attendees.append({"email":email})
+                
             response = self.client.create_event(
                 calendar_id=self.calendar_id,
                 summary=args.get("summary"),
                 location=args.get("location"),
                 description=args.get("description"),
                 start=args.get("start"),
-                end=args.get("end")
+                end=args.get("end"),
+                attendees = attendees
             )
         except Exception as error:
             logger.error("There was an error {}".format(error))
@@ -76,7 +82,7 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
             }
 
         return {
-            "output": "Event created with the following link : {}".format(response)
+            "output": "Event created with the following link : {} - {}".format(response, str(attendees))
         }
 
 

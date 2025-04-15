@@ -92,6 +92,7 @@ class GoogleCalendarClient():
         event["summary"] = kwargs.get("summary", "")
         event["location"] = kwargs.get("location", "")
         event["description"] = kwargs.get("description", "")
+        event["attendees"] = kwargs.get("attendees", "")
         event["start"] = {
             'dateTime': kwargs.get("start")
         }
