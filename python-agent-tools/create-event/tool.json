@@ -1,8 +1,9 @@
 {
     "id": "create-google-calendar-events",
     "meta": {
-        "icon": "icon-calendar",
-        "label": "Create a Google Calendar event"
+        "icon": "dku-icon-google-calendar-20",
+        "label": "Create Google Calendar Event",
+        "description": "Create a Google Calendar Event from user input"
     },
     
     "params" : [
