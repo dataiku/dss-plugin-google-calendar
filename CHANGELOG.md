@@ -1,6 +1,6 @@
 # Changelog
 
-## [Version 1.1.0](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.0.2) - Fix release - 2026-04-12
+## [Version 1.1.0](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.0) - Fix release - 2025-04-30
 
 - Add agent tool for event creation
 - Bump python version to Python3.9 and Python3.11

@@ -60,6 +60,13 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
     def invoke(self, input, trace):
         logger.info("Invoke google-calendar tool with {}".format(input))
         args = input.get("input", {})
+
+        # Log inputs and config to trace
+        trace.span["name"] = "CREATE_GOOGLE_CALENDAR_EVENTS_TOOL_CALL"
+        for key, value in args.items():
+            trace.inputs[key] = value
+        trace.attributes["config"] = self.config
+
         try:
             attendees_emails = args.get("attendees","").split(",")
             attendees = []
@@ -81,8 +88,13 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
                 "output": "There was an error and the Google Calendar event could not be created : {}".format(error)
             }
 
+        output_text = "Event created with the following link : {} - {}".format(response, str(attendees))
+
+        # Log outputs to trace
+        trace.outputs["output"] = output_text
+
         return {
-            "output": "Event created with the following link : {} - {}".format(response, str(attendees))
+            "output": output_text
         }
 
 
