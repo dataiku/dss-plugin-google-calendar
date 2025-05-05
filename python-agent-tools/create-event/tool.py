@@ -96,11 +96,3 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
         return {
             "output": output_text
         }
-
-
-def get_event_attendees_emails(event):
-    email_list = []
-    attendees = event.get("attendees", [])
-    for attendee in attendees:
-        email_list.append(attendee.get("email"))
-    return email_list
