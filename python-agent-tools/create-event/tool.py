@@ -21,7 +21,7 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
         self.calendar_id = config.get("calendar_id", constants.DEFAULT_CALENDAR_ID)
 
     def get_descriptor(self, tool):
-        time_now = "All time expression should be evaluated agains the current date and time, which is {}.".format(time_now_RFC3339())
+        time_now = "All time expression should be evaluated against the current date and time, which is {}.".format(time_now_RFC3339())
         return {
             "description": "This tool is a wrapper around Google Calendar Events list API, useful when you need to create an event stored on a Google Calendar. The input to this tool is a dictionary containing the time period for the events, e.g. '{'timeMin':'2011-06-03T10:00:00Z', 'timeMax':'2011-06-03T10:30:00Z'}'",
             "inputSchema": {
