@@ -49,3 +49,8 @@ def extract_start_end_dates(events):
     for event in events:
         event = extract_start_end_date(event)
     return events
+
+
+def time_now_RFC3339():
+    now = datetime.datetime.now(datetime.timezone.utc)
+    return now.isoformat("T").split(".")[0] + "Z"

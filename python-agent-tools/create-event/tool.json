@@ -1,0 +1,23 @@
+{
+    "id": "create-google-calendar-events",
+    "meta": {
+        "icon": "icon-calendar",
+        "label": "Create Google Calendar Event",
+        "description": "Create a Google Calendar Event from user input"
+    },
+    
+    "params" : [
+        {
+            "name": "oauth_credentials",
+            "label": "Google Single Sign On",
+            "type": "PRESET",
+            "parameterSetId": "oauth-credentials"
+        },
+        {
+          "type": "STRING",
+          "name": "calendar_id",
+          "label": "Calendar ID",
+          "defaultValue": "primary"
+        }
+    ]
+}
