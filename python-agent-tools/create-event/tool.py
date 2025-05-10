@@ -65,7 +65,6 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
         trace.span["name"] = "CREATE_GOOGLE_CALENDAR_EVENTS_TOOL_CALL"
         for key, value in args.items():
             trace.inputs[key] = value
-        trace.attributes["config"] = self.config
 
         try:
             attendees_emails = args.get("attendees","").split(",")
