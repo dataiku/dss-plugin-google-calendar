@@ -5,7 +5,7 @@
         "label": "Google Calendar",
         "description": "Retrieve data from your Google Calendar account",
         "author": "Dataiku (Alex Bourret)",
-        "icon": "icon-calendar",
+        "icon": "icon-calendar dku-icon-google-calendar",
         "tags": ["Google"],
         "url": "https://www.dataiku.com/product/plugins/google-calendar/",
         "licenseInfo": "Apache Software License"

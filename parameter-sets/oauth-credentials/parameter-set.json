@@ -2,7 +2,7 @@
     "meta": {
         "label": "Google Single Sign On",
         "description": "",
-        "icon": "icon-calendar"
+        "icon": "icon-calendar dku-icon-google-calendar"
     },
     "defaultDefinableInline": false,
     "defaultDefinableAtProjectLevel": false,

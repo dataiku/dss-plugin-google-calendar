@@ -2,7 +2,7 @@
     "meta": {
         "label": "Calendar events",
         "description": "Retrieve events from your Google Calendar based on parameters of an existing dataset",
-        "icon": "icon-calendar"
+        "icon": "icon-calendar dku-icon-google-calendar"
     },
     "kind": "PYTHON",
     "inputRoles": [

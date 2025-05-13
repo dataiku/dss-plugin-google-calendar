@@ -2,7 +2,7 @@
     "meta" : {
         "label": "Events",
         "description": "Retrieve events from your Google Calendar",
-        "icon": "icon-calendar"
+        "icon": "icon-calendar dku-icon-google-calendar"
     },
     "readable": true,
     "writable": false,
