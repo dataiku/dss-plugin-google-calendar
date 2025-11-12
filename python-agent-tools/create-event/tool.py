@@ -57,6 +57,16 @@ class CreateGoogleCalendarEventsTool(BaseAgentTool):
             }
         }
 
+    def load_sample_query(self, tool):
+        return {
+            "summary": "Title of the event",
+            "location": "Location of the event",
+            "description": "Short description of the event",
+            "start": "Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00",
+            "end": "Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00",
+            "attendees": "Comma separated string of the attendees email addresses",
+        }
+
     def invoke(self, input, trace):
         logger.info("Invoke google-calendar tool with {}".format(input))
         args = input.get("input", {})

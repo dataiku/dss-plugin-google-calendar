@@ -1,5 +1,9 @@
 # Changelog
 
+## [Version 1.1.2](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.2) - Feature release - 2025-11-13
+
+- Adding load sample query function
+
 ## [Version 1.1.1](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.1) - Fix release - 2025-05-12
 
 - Fixing agent tool trace logging
