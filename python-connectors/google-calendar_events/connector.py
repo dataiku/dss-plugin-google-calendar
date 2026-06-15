@@ -2,7 +2,7 @@ import logging
 import datetime
 from dataiku.connector import Connector
 from google_calendar_client import GoogleCalendarClient
-from dku_common import get_token_from_config, assert_no_temporal_paradox, extract_start_end_date
+from dku_common import get_token_from_config, assert_no_temporal_paradox, extract_start_end_date, get_date_range
 from dku_constants import DKUConstants as constants
 
 
@@ -17,8 +17,7 @@ class GoogleCalendarEventConnector(Connector):
         Connector.__init__(self, config, plugin_config)
         access_token = get_token_from_config(config)
         self.client = GoogleCalendarClient(access_token)
-        self.from_date = self.config.get("from_date", None)
-        self.to_date = self.config.get("to_date", None)
+        self.from_date, self.to_date = get_date_range(config)
         assert_no_temporal_paradox(self.from_date, self.to_date)
         self.calendar_id = self.config.get("calendar_id", constants.DEFAULT_CALENDAR_ID)
         self.raw_results = self.config.get("raw_results", False)

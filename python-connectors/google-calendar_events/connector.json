@@ -18,18 +18,84 @@
           "name": "calendar_id",
           "label": "Calendar ID",
           "defaultValue": "primary"
-        },        
-        {
-          "type": "DATE",
-          "name": "from_date",
-          "label": "From",
-          "description": "Optional"
         },
         {
-          "type": "DATE",
-          "name": "to_date",
-          "label": "To",
-          "description": "Optional"
+            "name": "date_range",
+            "label": "Date range",
+            "type": "SELECT",
+            "selectChoices": [
+                {
+                    "value": null,
+                    "label": "Custom"
+                },
+                {
+                    "value": "manual",
+                    "label": "Custom (Manual)"
+                },
+                {
+                    "value": "today",
+                    "label": "Today"
+                },
+                {
+                    "value": "tomorrow",
+                    "label": "Tomorrow"
+                },
+                {
+                    "value": "yesterday",
+                    "label": "Yesterday"
+                },
+                {
+                    "value": "last_week",
+                    "label": "Last Week"
+                },
+                {
+                    "value": "next_week",
+                    "label": "Next Week"
+                },
+                {
+                    "value": "last_month",
+                    "label": "Last month"
+                },
+                {
+                    "value": "next_month",
+                    "label": "Next month"
+                }
+            ]
+        },
+        {
+            "name": "from_date",
+            "label": " ",
+            "description": "From",
+            "type": "DATE",
+            "visibilityCondition": "model.date_range==null"
+        },
+        {
+            "name": "manual_start_date",
+            "type": "STRING",
+            "label": " ",
+            "description": "From",
+            "visibilityCondition": "model.date_range=='manual'"
+        },
+        {
+            "name": "to_date",
+            "label": " ",
+            "description": "To",
+            "type": "DATE",
+            "visibilityCondition": "model.date_range==null"
+        },
+        {
+            "name": "manual_end_date",
+            "type": "STRING",
+            "label": " ",
+            "description": "To",
+            "visibilityCondition": "model.date_range=='manual'"
+        },
+        {
+            "name": "manual-time-doc-separator",
+            "type": "SEPARATOR",
+            "label": " ",
+            "description": "Must be in format 2024-12-31T23:59:00.000Z",
+            "visibilityCondition": "model.date_range=='manual'"
         },
         {
           "type": "INT",
