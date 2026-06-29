@@ -28,7 +28,7 @@ client = GoogleCalendarClient(access_token)
 logger.info("Google Calendar client authenticated")
 
 input_parameters_dataset = dataiku.Dataset(input_A_names[0])
-input_parameters_dataframe = input_parameters_dataset.get_dataframe()
+input_parameters_dataframe = input_parameters_dataset.get_dataframe(infer_with_pandas=False)
 logger.info("{} line(s) to process".format(len(input_parameters_dataframe)))
 events = []
 for index, input_parameters_row in input_parameters_dataframe.iterrows():

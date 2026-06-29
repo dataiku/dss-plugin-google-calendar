@@ -16,6 +16,8 @@ def get_token_from_config(config):
 
 
 def get_iso_format(panda_date):
+    if isinstance(panda_date, str):
+        return panda_date
     if pandas.isnull(panda_date):
         return None
     return panda_date.isoformat() + "Z"
