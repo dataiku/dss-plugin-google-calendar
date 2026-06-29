@@ -3,6 +3,7 @@
 ## [Version 1.2.0](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.2.0) - Feature release - 2026-06-15
 
 - Adding a date range selector
+- Removing Google librairies
 
 ## [Version 1.1.2](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.2) - Feature release - 2025-11-13
 
