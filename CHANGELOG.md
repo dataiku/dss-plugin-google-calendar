@@ -1,5 +1,9 @@
 # Changelog
 
+## [Version 1.1.3](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.3) - Fix release - 2026-06-30
+
+- Fix missing pkg_ressources module
+
 ## [Version 1.1.2](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.2) - Feature release - 2025-11-13
 
 - Adding load sample query function
