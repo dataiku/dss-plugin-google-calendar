@@ -3,7 +3,10 @@
     "PYTHON36",
     "PYTHON37",
     "PYTHON39",
-    "PYTHON311"
+    "PYTHON311",
+    "PYTHON312",
+    "PYTHON313",
+    "PYTHON314"
   ],
   "corePackagesSet": "AUTO",
   "forceConda": false,

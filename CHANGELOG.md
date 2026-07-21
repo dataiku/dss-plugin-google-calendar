@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.2.0 - Enhancement release - 2026-07-20
+
+- Added supported Python versions: 3.12, 3.13, 3.14
+
 ## [Version 1.1.3](https://github.com/dataiku/dss-plugin-google-calendar/releases/tag/v1.1.3) - Fix release - 2026-06-30
 
 - Fix missing pkg_ressources module
